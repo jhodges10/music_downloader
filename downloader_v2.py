@@ -1,3 +1,5 @@
+
+#LOL ITS A MESS BUT IT KIND OF WORKS I GUESS i need to sleep on it lol. sigh python.
 # Scrape youtube and download mp3's
 
 import csv #Imports CSV's duh
@@ -21,26 +23,62 @@ with open('sample.csv') as csvfile:
     for row in videograbber:
         videos.append(row)
 
+#eventually add a document to add more exceptions which will import into this array
+exceptions= ["cover","live","remix","version", "edit", "Cover", "Live", "Remix", "Version", "Edit", "COVER", "LIVE", "REMIX", "VERSION", "EDIT"]
+
+def exceptions_in_string(exceptions, song_string, searchterm):
+    tempvar=0
+    for s in exceptions:
+        if s in vid_title:
+            if s in searchterm:
+                continue
+            tempvar=1
+            break
+    return tempvar
 
 #simply a counter for iterating, shouldn't be necessary but is cuz I suck
 y= 0
-
+print "y= ",y
 for each in videos:
+<<<<<<< HEAD
     searchterm = ','.join(videos[y]) #convert list to string
     print "This is what we're looking for: " +searchterm #print out which one we're searching
     y+=1 #increase the position in the list
+=======
+    soup=" "
+    html=" "
+    response=" "
+    url=" "
+    searchterm = ','.join(videos[y]) #convert list to string
+    print "Searchterm= ", searchterm
+    print "This is what we're looking for: " +searchterm #print out which one we're searching
+>>>>>>> refs/remotes/origin/lauren
     query = urllib.quote(searchterm) #define the query string
     url = "https://www.youtube.com/results?search_query=" +query #generate url query
     response = urllib2.urlopen(url) #download the response
     html = response.read() #read that HTML wassup
+<<<<<<< HEAD
     soup = BeautifulSoup(html, "lxml") #make some soup out of that HTML
 
+=======
+    soup = BeautifulSoup(html,"lxml") #make some soup out of that HTML
+>>>>>>> refs/remotes/origin/lauren
     # LETS LOOP SOME SHIT
+    #count=0
     for vid in soup.findAll(attrs={'class':'yt-uix-tile-link'}): #goes through every line that it pulls out which is a youtube video link (including friggen playlists)
+    #while count==0:
+        vid_title=" "
+        url=" "
+        video=" "
+        video_audio=" "
+        filename=" "
         url = 'https://www.youtube.com' + vid['href'] #generate the nice URL
         video = pafy.new(url) #turn that into something that our youtube API tool can use
         vid_title = video.title #grab the title for it
+        print "vid_title= ",vid_title
+        video_audio=video.getbestaudio()
         #attempt to only grab ones that don't contain the wrong title
+<<<<<<< HEAD
         print vid_title
         if "remix" not in vid_title:
             video_audio = video.getbestaudio()
@@ -57,3 +95,18 @@ for each in videos:
         time.sleep(1)
         
     
+=======
+        evar=exceptions_in_string(exceptions,vid_title, searchterm)
+        if evar==1:
+            continue
+        print vid_title
+        filename=video_audio.download(quiet=True)
+        time.sleep(10)
+        print 'https://www.youtube.com' + vid['href']  #somewhat redundant?
+        #time.sleep(5) #add in a sleep to deal with that same issue
+        #count=1
+        #print "count", count
+        y+=1 #increase the position in the list
+        break
+            
+>>>>>>> refs/remotes/origin/lauren
