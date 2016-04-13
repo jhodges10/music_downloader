@@ -51,7 +51,7 @@ for each in videos:
     url = "https://www.youtube.com/results?search_query=" +query #generate url query
     response = urllib2.urlopen(url) #download the response
     html = response.read() #read that HTML wassup
-    soup = BeautifulSoup(html) #make some soup out of that HTML
+    soup = BeautifulSoup(html,"lxml") #make some soup out of that HTML
     # LETS LOOP SOME SHIT
     #count=0
     for vid in soup.findAll(attrs={'class':'yt-uix-tile-link'}): #goes through every line that it pulls out which is a youtube video link (including friggen playlists)
