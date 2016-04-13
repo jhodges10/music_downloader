@@ -72,7 +72,7 @@ for each in videos:
             continue
         print vid_title
         filename=video_audio.download(quiet=True)
-        time.sleep(30)
+        time.sleep(10)
         print 'https://www.youtube.com' + vid['href']  #somewhat redundant?
         #time.sleep(5) #add in a sleep to deal with that same issue
         #count=1
