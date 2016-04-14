@@ -1,4 +1,3 @@
-
 #LOL ITS A MESS BUT IT KIND OF WORKS I GUESS i need to sleep on it lol. sigh python.
 # Scrape youtube and download mp3's
 
@@ -40,11 +39,6 @@ def exceptions_in_string(exceptions, song_string, searchterm):
 y= 0
 print "y= ",y
 for each in videos:
-<<<<<<< HEAD
-    searchterm = ','.join(videos[y]) #convert list to string
-    print "This is what we're looking for: " +searchterm #print out which one we're searching
-    y+=1 #increase the position in the list
-=======
     soup=" "
     html=" "
     response=" "
@@ -52,17 +46,11 @@ for each in videos:
     searchterm = ','.join(videos[y]) #convert list to string
     print "Searchterm= ", searchterm
     print "This is what we're looking for: " +searchterm #print out which one we're searching
->>>>>>> refs/remotes/origin/lauren
     query = urllib.quote(searchterm) #define the query string
     url = "https://www.youtube.com/results?search_query=" +query #generate url query
     response = urllib2.urlopen(url) #download the response
     html = response.read() #read that HTML wassup
-<<<<<<< HEAD
-    soup = BeautifulSoup(html, "lxml") #make some soup out of that HTML
-
-=======
     soup = BeautifulSoup(html,"lxml") #make some soup out of that HTML
->>>>>>> refs/remotes/origin/lauren
     # LETS LOOP SOME SHIT
     #count=0
     for vid in soup.findAll(attrs={'class':'yt-uix-tile-link'}): #goes through every line that it pulls out which is a youtube video link (including friggen playlists)
@@ -78,29 +66,12 @@ for each in videos:
         print "vid_title= ",vid_title
         video_audio=video.getbestaudio()
         #attempt to only grab ones that don't contain the wrong title
-<<<<<<< HEAD
-        print vid_title
-        if "remix" not in vid_title:
-            video_audio = video.getbestaudio()
-        elif "cover" not in vid_title:
-            video_audio = video.getbestaudio()
-        #deal with weird bug in pafy where it has problems with files already existing since the temp name is bad
-        try:
-            filename = video_audio.download(filepath="../downloads/", quiet=True)
-        except:
-            pass
-        #somewhat redundant?
-        print 'https://www.youtube.com' + vid['href']
-        #add in a sleep to deal with that same issue
-        time.sleep(1)
-        
-    
-=======
         evar=exceptions_in_string(exceptions,vid_title, searchterm)
         if evar==1:
             continue
         print vid_title
         filename=video_audio.download(quiet=True)
+        filename = video_audio.download(filepath="../downloads/", quiet=True)
         time.sleep(10)
         print 'https://www.youtube.com' + vid['href']  #somewhat redundant?
         #time.sleep(5) #add in a sleep to deal with that same issue
@@ -108,5 +79,3 @@ for each in videos:
         #print "count", count
         y+=1 #increase the position in the list
         break
-            
->>>>>>> refs/remotes/origin/lauren
