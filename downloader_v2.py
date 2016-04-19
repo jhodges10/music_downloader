@@ -59,7 +59,6 @@ with open('exceptions.csv') as exceptionfile:
     exceptions=csv.reader(exceptionfile)
     for row in exceptions:
         exceptionlist.append(row)
-        print row
         
 with open('sample.csv') as csvfile: #import song lists
     songs=csv.reader(csvfile)
@@ -73,6 +72,7 @@ for each in songlist: #for every song in the songlist, download the mp4
     download_song(answer)
     print answer
     y=y+1
+
     
 
 
