@@ -1,4 +1,3 @@
-
 #LOL ITS A MESS BUT IT KIND OF WORKS I GUESS i need to sleep on it lol. sigh python.
 # Scrape youtube and download mp3's
 
@@ -69,6 +68,7 @@ for each in videos:
             continue
         print vid_title
         filename=video_audio.download(quiet=True)
+        filename = video_audio.download(filepath="../downloads/", quiet=True)
         time.sleep(10)
         print 'https://www.youtube.com' + vid['href']  #somewhat redundant?
         #time.sleep(5) #add in a sleep to deal with that same issue
@@ -76,4 +76,3 @@ for each in videos:
         #print "count", count
         y+=1 #increase the position in the list
         break
-            
