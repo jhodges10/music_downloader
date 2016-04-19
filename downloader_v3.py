@@ -1,4 +1,4 @@
-# Bulk MP4 Downloader
+# Bulk M4A Downloader
 # Written by Jerfrey and Huff
 # In progress
 ## You have to pip install youtube-dl, pafy, and beautifulsoup
@@ -8,8 +8,15 @@ import urllib #This submits the html for youtube
 import urllib2 #This downloads the HTML and parses it
 from bs4 import BeautifulSoup #This does the hard work on the HTML
 import pafy #This does Youtube API stuff
-#import eyeD3 #This does ID3 tags for mp3s
-import time
+import eyed3 #This does ID3 tags for mp3s
+import time # allow for any sleeps necessary
+import os # handle the operating system stuff
+
+######THIS DEALS WITH DIRECTORIES#######
+download_dir = "../music_downloads/"
+if not os.path.exists(download_dir):
+    os.makedirs(download_dir)
+####################################
 
 #Song class
 class Song:
@@ -67,11 +74,19 @@ def download_song(answer):
     video=pafy.new(url)
     try:
         best=video.getbestaudio(preftype="m4a")
-        filename=best.download(filepath="../downloads/",quiet=True)
+        filename=best.download(filepath=download_dir,quiet=True)
     except:
         best=video.getbest(preftype="mp4")
-        filename=best.download(filepath="../downloads/",quiet=True)
+        filename=best.download(filepath=download_dir,quiet=True)
         
+def tag_ID3(downloaded_song,songartist,songtitle):
+    tag = eyed3.tag()
+    tag.link(downloaded_song)
+    tag.setArtist(songartist)
+    tag.setTitle(songtitle)
+    print "Succeeded to tag your songs" 
+
+
 #eventually add a document to add more exceptions which will import into this array
 exceptionlist = []
 songlist = []
@@ -89,11 +104,15 @@ with open('songfile.csv') as csvfile: #import song lists
         x=Song(row['songname'],row['songartist'],row['songalbum'])
         songlist.append(x)
         
-for each in songlist: #for every song in the songlist, download the mp4
+for each in songlist: #for every song in the songlist, download the m4a or mp4
     songtitle = each.getTitle()
     songartist = each.getArtist()
     songsearch = songtitle+" "+songartist
     answer=find_url(songsearch)
+    print answer #moved this before calling the download function so it says what it's doing before it does it instead of afterwards
     download_song(answer)
-    print answer
+    try:
+        tag_ID3(downloaded_song,songartist,songtitle)
+    except:
+        print "Failed to set ID3 tags"
     y=y+1
