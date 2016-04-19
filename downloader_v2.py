@@ -51,11 +51,16 @@ def download_song(answer):
     filename=best.download(quiet=True)
 
 #eventually add a document to add more exceptions which will import into this array
-exceptions= ["cover","live","remix","version", "edit", "Cover", "Live", "Remix", "Version", "Edit", "COVER", "LIVE", "REMIX", "VERSION", "EDIT"]
-
+exceptionlist = []
 songlist = []
 y=0
 
+with open('exceptions.csv') as exceptionfile:
+    exceptions=csv.reader(exceptionfile)
+    for row in exceptions:
+        exceptionlist.append(row)
+        print row
+        
 with open('sample.csv') as csvfile: #import song lists
     songs=csv.reader(csvfile)
     for row in songs:
@@ -68,4 +73,8 @@ for each in songlist: #for every song in the songlist, download the mp4
     download_song(answer)
     print answer
     y=y+1
+    
+
+
+
     
