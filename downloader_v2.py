@@ -23,9 +23,6 @@ with open('sample.csv') as csvfile:
     for row in videograbber:
         videos.append(row)
 
-#eventually add a document to add more exceptions which will import into this array
-exceptions= ["cover","live","remix","version", "edit", "Cover", "Live", "Remix", "Version", "Edit", "COVER", "LIVE", "REMIX", "VERSION", "EDIT"]
-
 def exceptions_in_string(exceptions, song_string, searchterm):
     tempvar=0
     for s in exceptions:
