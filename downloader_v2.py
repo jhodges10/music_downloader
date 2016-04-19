@@ -11,6 +11,24 @@ import pafy #This does Youtube API stuff
 #import eyeD3 #This does ID3 tags for mp3s
 import time
 
+#Song class
+class Song:
+    
+    def __init__(self, title, artist, album):
+      self.title = title
+      self.artist = artist
+      self.album = album
+
+    def displaySong(self):
+      print "Title : ", self.title, ", Artist: ", self.artist, ", Album: ", self.album
+
+    def getTitle(self):
+        return self.title
+
+    def getArtist(self):
+        return self.artist
+
+#other functions
 def get_urls(soup):
     for link in soup.find_all('a'):
         templink=link.get('href')
@@ -60,21 +78,18 @@ with open('exceptions.csv') as exceptionfile:
     for row in exceptions:
         exceptionlist.append(row)
         
-with open('sample.csv') as csvfile: #import song lists
-    songs=csv.reader(csvfile)
-    for row in songs:
-        songlist.append(row)
-        print row
-
+with open('songfile.csv') as csvfile: #import song lists
+    fieldnames=['songname','songartist','songalbum']
+    reader=csv.DictReader(csvfile, fieldnames=fieldnames)
+    for row in reader:
+        x=Song(row['songname'],row['songartist'],row['songalbum'])
+        songlist.append(x)
+        
 for each in songlist: #for every song in the songlist, download the mp4
-    songtitle = ",".join(songlist[y])
-    answer=find_url(songtitle)
+    songtitle = each.getTitle()
+    songartist = each.getArtist()
+    songsearch = songtitle+" "+songartist
+    answer=find_url(songsearch)
     download_song(answer)
     print answer
     y=y+1
-
-    
-
-
-
-    
